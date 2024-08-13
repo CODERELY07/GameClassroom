@@ -1,6 +1,6 @@
 <?php
     session_start();
-    require_once '../unsetSession.php';
+
     if(!isset($_SESSION['isLogin'])){
       header('location:../index.php');
     }
@@ -25,15 +25,20 @@
   </head>
   <body class="bg-danger">
     <div id="guessNumber" class="container my-5">
-     
+   
         <div class="card">
+        <p class="mx-auto mt-4 display-6">Player: <?php echo $_SESSION['username']?></p>
         <p class="px-5 mt-5">Points: <span id='pointsResult'></span></p> 
         <p class="px-5">Remaining Attempts: <span id='attemptsResult'></span></p>
           <div class="d-flex justify-content-center card-body flex-column align-items-center gap-3 m-4">
             <p>Note: You only have 5 attempts each guessess</p>
             <p id="guessGeneratorResult"></p>
             <input type="text" id="guessNumberInput">
+            <div>
             <button id="guessNumberBtn" class="btn btn-success">Guess</button>
+            <button id="restart" class="btn btn-primary">Restart</button>
+            </div>
+          
           </div>
         </div>
       </div>
@@ -57,152 +62,150 @@
 
     <script>
 
-      // Guess Game
-      let guessGeneratorResult = document.getElementById('guessGeneratorResult');
-      let guessNumberInput = document.getElementById('guessNumberInput');
-      let guessNumberBtn = document.getElementById('guessNumberBtn');
-      let pointsResult = document.getElementById('pointsResult');
-      let attemptsResult = document.getElementById('attemptsResult');
+    let guessGeneratorResult = document.getElementById('guessGeneratorResult');
+    let guessNumberInput = document.getElementById('guessNumberInput');
+    let guessNumberBtn = document.getElementById('guessNumberBtn');
+    let pointsResult = document.getElementById('pointsResult');
+    let attemptsResult = document.getElementById('attemptsResult');
+    const leaderboards = document.getElementById('leaderboards');
+    const restart = document.getElementById('restart');
 
-      let guessAttempt = 5;
-      let points = 0;
+    let guessAttempt = 5;
+    let points = 0;
+    let minNumber, maxNumber, correctNumber;
 
+    function generateNumber(min, max) {
+      return Math.floor(Math.random() * (max - min + 1) + min);
+    }
 
-      function generateNumber(min,max){
-        return Math.floor(Math.random() * (max-min + 1) + min);
-      }
-      function minNumberGenerator(){
-          let min = 1;
-          let max = 10;
-          let num = Math.floor(Math.random() * (max-min + 1) + min);
-          return num;
-      }
-      function maxNumberGenerator(){
-          let min = 10;
-          let max = 20;
-          let num = Math.floor(Math.random() * (max-min + 1) + min);
-          return num;
-      }
+    function minNumberGenerator() {
+      let min = 1;
+      let max = 10;
+      return generateNumber(min, max);
+    }
 
-      function displayQuestion(){
-        const minNumber = minNumberGenerator();
-        const maxNumber = maxNumberGenerator();
-        const correctNumber = generateNumber(minNumber, maxNumber);
+    function maxNumberGenerator() {
+      let min = 10;
+      let max = 20;
+      return generateNumber(min, max);
+    }
 
-        function display(){
-          if(guessAttempt == 0 || guessAttempt < 0){
-            guessGeneratorResult.innerHTML = "Game Over";
-            attemptsResult.innerHTML = 0;
-            guessNumberInput.value = "";
-            savaPoints(points);
-            Swal.fire({
-            title: "Game Over",
-            text: `The correct number is ${correctNumber} Your Points is ${points}`,
-            icon: "error"
-            });
-          }else{
-            guessGeneratorResult.innerHTML = "Guess the number from " + minNumber + " to " + maxNumber;
-            guessNumberInput.value = "";
-            pointsResult.innerHTML = points;
-            attemptsResult.innerHTML = guessAttempt;
-          }
-        }
-        display();
-         guessNumberBtn.onclick = function (){
-          const userGuess = Number(guessNumberInput.value);
-          if(userGuess < minNumber || userGuess > maxNumber){
-            guessGeneratorResult.innerHTML = "The number has minimun and maximum";
-             setTimeout(() => {
-                display()
-              }, 1000);
-          }else{
-               if(userGuess === correctNumber){
-                points +=20;
-                guessAttempt = 5;
-                guessGeneratorResult.innerHTML = "You guessed it! The number was " + correctNumber;
-                setTimeout(() => {
-                  displayQuestion();
-                }, 1000);
-              
-            } else if(userGuess < correctNumber){
-              guessAttempt--;
-              guessGeneratorResult.innerHTML = "You guessed is to Low";
-              setTimeout(() => {
-                display()
-              }, 1000);
-            
-            }else if(userGuess > correctNumber){
-              guessAttempt--;
-              guessGeneratorResult.innerHTML = "You guessed is to High";
-                  setTimeout(() => {
-                    display()
-                  }, 1000);
-              }
-          }
-          }
-      }
-
+    function startNewGame() {
+      minNumber = minNumberGenerator();
+      maxNumber = maxNumberGenerator();
+      correctNumber = generateNumber(minNumber, maxNumber);
+      guessAttempt = 5;
       displayQuestion();
+    }
 
-      // Save points
-      async function savaPoints(points){
-        try{
-          const response = await fetch('save_points.php',{
-            method: 'POST',
-            headers: {
-              'Content-Type' : 'application/x-www-form-urlencoded'
-            },
-            body: new URLSearchParams({
-              'points' : points
-            })
-          });
-
-          const result = await response.json();
-          if(response.ok){
-            if(result.success){
-              console.log(result.success);
-            }else if(result.error){
-              console.log(result.error);
-            }else{
-              console.log("Network Error.");
-            }
-          }
-        }catch(error){
-          console.error("Error: ", error);
-        }
-      }
-      
-      // Fetch Data
-       const leaderboards = document.getElementById('leaderboards');
-      async function displayLeaderboards(){
-        try{
-          const response = await fetch('process.php');
-          const data = await response.json();
-          if(!response.ok){
-             throw new Error("Network Error.");
-          }          
-          console.log(data);
-          if(data.error){
-            leaderboards.innerHTML += `<tr><td>${data.error}</td></tr>`;
-          }else if(data.message){
-            leaderboards.innerHTML += `<tr><td>${data.message}</td></tr>`;
-          }else{
-             leaderboards.innerHTML += 
-             data.map((item, index) => 
-              `<tr>
-                <td>${index + 1}</td>
-                <td>${item.username}</td>
-                <td>${item.guessPoints}</td>
-              </tr>`
-             ).join("");
-          }
-        }catch(error){
-          // console.error("Error: ", error);
-          leaderboards.innerHTML += `<p class="text-center display-6 mt-5">No one is on the board! </p>`;
-        }
+    function displayQuestion() {
+      if (guessAttempt <= 0) {
+        guessGeneratorResult.innerHTML = "Game Over";
+        attemptsResult.innerHTML = 0;
+        guessNumberInput.value = "";
+        guessNumberBtn.disabled = true; // Disable button after game over
+        savePoints(points);
+        Swal.fire({
+          title: "Game Over",
+          text: `The correct number was ${correctNumber}. Your Points: ${points}`,
+          icon: "error"
+        });
+        displayLeaderboards();
+        return; // Exit function
       }
 
-      displayLeaderboards();
+      guessGeneratorResult.innerHTML = `Guess the number from ${minNumber} to ${maxNumber}`;
+      guessNumberInput.value = "";
+      pointsResult.innerHTML = points;
+      attemptsResult.innerHTML = guessAttempt;
+    }
+
+    guessNumberBtn.onclick = function() {
+      if (guessAttempt <= 0) return; // Prevent interaction if game is over
+
+      const userGuess = Number(guessNumberInput.value);
+      if (userGuess < minNumber || userGuess > maxNumber) {
+        guessGeneratorResult.innerHTML = `The number should be between ${minNumber} and ${maxNumber}`;
+        setTimeout(displayQuestion, 1000);
+      } else {
+        if (userGuess === correctNumber) {
+          points += 20;
+          guessGeneratorResult.innerHTML = `You guessed it! The number was ${correctNumber}`;
+          setTimeout(startNewGame, 1000); // Start new game after a correct guess
+        } else {
+          guessAttempt--;
+          guessGeneratorResult.innerHTML = userGuess < correctNumber ? "Your guess is too low" : "Your guess is too high";
+          setTimeout(displayQuestion, 1000);
+        }
+      }
+    };
+
+    restart.onclick = function() {
+      if (confirm("Are you sure you want to restart the game?")) {
+        points = 0;
+        guessNumberBtn.disabled = false; // Re-enable the button if it was disabled
+        displayLeaderboards();
+        startNewGame();
+      }
+    };
+
+    async function savePoints(points) {
+      try {
+        const response = await fetch('save_points.php', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          body: new URLSearchParams({
+            'points': points
+          })
+        });
+
+        const result = await response.json();
+        if (response.ok) {
+          if (result.success) {
+            console.log(result.success);
+          } else if (result.error) {
+            console.log(result.error);
+          } else {
+            console.log("Network Error.");
+          }
+        }
+      } catch (error) {
+        console.error("Error: ", error);
+      }
+    }
+
+    async function displayLeaderboards() {
+      try {
+        const response = await fetch('process.php');
+        const data = await response.json();
+        if (!response.ok) {
+          throw new Error("Network Error.");
+        }
+
+        leaderboards.innerHTML = ""; // Clear existing data
+        if (data.error) {
+          leaderboards.innerHTML = `<tr><td>${data.error}</td></tr>`;
+        } else if (data.message) {
+          leaderboards.innerHTML = `<tr><td>${data.message}</td></tr>`;
+        } else {
+          leaderboards.innerHTML = data.map((item, index) =>
+            `<tr>
+              <td>${index + 1}</td>
+              <td>${item.username}</td>
+              <td>${item.guessPoints}</td>
+            </tr>`
+          ).join("");
+        }
+      } catch (error) {
+        leaderboards.innerHTML = `<p class="text-center display-6 mt-5">No one is on the board!</p>`;
+      }
+    }
+
+    displayLeaderboards();
+    startNewGame(); 
+
     </script>
   </body>
 </html>

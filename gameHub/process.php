@@ -5,8 +5,8 @@
     if($conn->connect_error){
         die(json_encode(["error" => "Connection Failed"]));
     }
-    //combine data table
-    $sql = "SELECT * FROM users";
+ 
+    $sql = "SELECT * FROM users WHERE guessPoints > 0 ORDER BY guessPoints DESC";
     $result = $conn->query($sql);
 
     $data = [];

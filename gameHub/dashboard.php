@@ -1,7 +1,6 @@
 <?php
     
     session_start();
-    require_once '../unsetSession.php';
     if(!isset($_SESSION['isLogin'])){
       header('location:../index.php');
     }
