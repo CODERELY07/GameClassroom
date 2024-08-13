@@ -1,0 +1,52 @@
+*,
+*::after,
+*::before{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+html,
+.box{
+    scroll-behavior: smooth;
+}
+.cards{
+    max-width: 600px;
+}
+.pointer{
+    cursor: pointer;
+}
+.box{
+    overflow: scroll;
+    height: 250px;
+    max-height: max-content;
+}
+.box .card-body{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+.box::-webkit-scrollbar {
+    display: none;
+}
+.profile_pic{
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    width:50px;
+    height: 50px;
+    background-color: #fff;
+    position: relative;
+    border-radius: 50%;
+}
+.gameHubHeader{
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    padding: 15px 25px;
+    display: flex;
+    align-items:center;
+    justify-content: space-between;
+}
+.profile{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
+}
