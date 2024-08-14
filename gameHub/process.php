@@ -6,7 +6,7 @@
         die(json_encode(["error" => "Connection Failed"]));
     }
  
-    $sql = "SELECT * FROM users WHERE guessPoints > 0 ORDER BY guessPoints DESC";
+    $sql = "SELECT * FROM users WHERE guessPoints > 0 ORDER BY guessPoints DESC LIMIT 10";
     $result = $conn->query($sql);
 
     $data = [];

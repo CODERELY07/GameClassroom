@@ -1,6 +1,5 @@
 <?php
     session_start();
-    require_once '../unsetSession.php';
     if(!isset($_SESSION['isLogin'])){
       header('location:../index.php');
     }
@@ -15,22 +14,34 @@
     <title>Game Classroom</title>
     <link rel="stylesheet" href="../style.css?v=<?php echo time(); ?>">
   </head>
-  <body class="bg-white">
-    <header class="gameHubHeader bg-dark text-white">
+  <body>
+  <header style="box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;">
+      <div class="container gameHubHeader">
         <div class="dashboard">
-          <h3 class="display-5 pointer">GameHub</h3>
-        </div>
-        <div class="profile">
-          <div class="profile_pic pointer">
-            
+            <a href="dashboard.php" class="text-decoration-none"><h3 class="display-5 pointer text-center VT323">Game Classroom</h3></a>
           </div>
-          <a href="../logout.php">
-            <button class="btn btn-danger">Logout</button>
-          </a>
-        </div>
+          <div class="profile" onclick='btn(this)'>
+            <div class="profile_pic pointer">
+              
+            </div>
+            <ul class="profile-settings">
+              <li><a href="leaderboards.php">LeaderBoards</a></li>
+              <li><a href="">Settings</a></li>
+              <li><a href="../logout.php">Logout</a></li>
+            </ul>
+          </div>
+      </div>
+       
     </header>
     <main class="container">
       <div class="text-center pt-5 m-5 mx-auto"><h1 class="mt-5 pt-5 display-1 ">Comming Soon...</h1></div>
     </main>
+
+    <script>
+      function btn(elem){
+        elem.lastElementChild.classList.toggle('active');
+      }
+
+    </script>
   </body>
 </html>

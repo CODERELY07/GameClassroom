@@ -22,3 +22,4 @@ CREATE TABLE users(
 -- )
 -- -- insert data into guessNUmberData
 -- INSERT INTO guessNumberData (userId, points) VALUES (1, 100)
+

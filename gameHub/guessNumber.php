@@ -14,6 +14,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <title>Game Classroom</title>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="../style.css?v=<?php echo time(); ?>">
     <style>
       #guessNumber input{
         width: 100%;
@@ -23,41 +24,25 @@
       }
     </style>
   </head>
-  <body class="bg-danger">
+  <body style="background-color:#6A7EFC">
     <div id="guessNumber" class="container my-5">
-   
+      <a href="dashboard.php" class="text-decoration-none"><h3 class="display-5 pointer text-center VT323 bg-white ">Game Classroom</h3></a> 
         <div class="card">
-        <p class="mx-auto mt-4 display-6">Player: <?php echo $_SESSION['username']?></p>
+        <p class="mx-auto mt-4 display-6">Player: <?php echo $_SESSION['usernameLogin']?></p>
         <p class="px-5 mt-5">Points: <span id='pointsResult'></span></p> 
         <p class="px-5">Remaining Attempts: <span id='attemptsResult'></span></p>
           <div class="d-flex justify-content-center card-body flex-column align-items-center gap-3 m-4">
             <p>Note: You only have 5 attempts each guessess</p>
             <p id="guessGeneratorResult"></p>
-            <input type="text" id="guessNumberInput">
+            <input type="text" id="guessNumberInput" class="form-control">
             <div>
-            <button id="guessNumberBtn" class="btn btn-success">Guess</button>
-            <button id="restart" class="btn btn-primary">Restart</button>
+            <button id="guessNumberBtn" class="btn primary-btn">Guess</button>
+            <button id="restart" class="btn btn-dark">Restart</button>
             </div>
           
           </div>
         </div>
       </div>
-    <div class="container py-5">
-        <div class="card">
-            <div class="card-header">
-                <h3 class="display-6">Leaderbords</h3>
-            </div>
-            <div class="card-body">
-              <table class="table table-stripped" id="leaderboards">
-                <tr>
-                  <th>Rank</th>
-                  <th>Username</th>
-                  <th>Points</th>
-                </tr>
-              </table>
-            </div>
-        </div>
-  </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
     <script>
@@ -110,7 +95,7 @@
           text: `The correct number was ${correctNumber}. Your Points: ${points}`,
           icon: "error"
         });
-        displayLeaderboards();
+        // displayLeaderboards();
         return; // Exit function
       }
 
@@ -144,7 +129,7 @@
       if (confirm("Are you sure you want to restart the game?")) {
         points = 0;
         guessNumberBtn.disabled = false; // Re-enable the button if it was disabled
-        displayLeaderboards();
+        // displayLeaderboards();
         startNewGame();
       }
     };
@@ -176,34 +161,34 @@
       }
     }
 
-    async function displayLeaderboards() {
-      try {
-        const response = await fetch('process.php');
-        const data = await response.json();
-        if (!response.ok) {
-          throw new Error("Network Error.");
-        }
+    // async function displayLeaderboards() {
+    //   try {
+    //     const response = await fetch('process.php');
+    //     const data = await response.json();
+    //     if (!response.ok) {
+    //       throw new Error("Network Error.");
+    //     }
 
-        leaderboards.innerHTML = ""; // Clear existing data
-        if (data.error) {
-          leaderboards.innerHTML = `<tr><td>${data.error}</td></tr>`;
-        } else if (data.message) {
-          leaderboards.innerHTML = `<tr><td>${data.message}</td></tr>`;
-        } else {
-          leaderboards.innerHTML = data.map((item, index) =>
-            `<tr>
-              <td>${index + 1}</td>
-              <td>${item.username}</td>
-              <td>${item.guessPoints}</td>
-            </tr>`
-          ).join("");
-        }
-      } catch (error) {
-        leaderboards.innerHTML = `<p class="text-center display-6 mt-5">No one is on the board!</p>`;
-      }
-    }
+    //     leaderboards.innerHTML = ""; // Clear existing data
+    //     if (data.error) {
+    //       leaderboards.innerHTML = `<tr><td>${data.error}</td></tr>`;
+    //     } else if (data.message) {
+    //       leaderboards.innerHTML = `<tr><td>${data.message}</td></tr>`;
+    //     } else {
+    //       leaderboards.innerHTML = data.map((item, index) =>
+    //         `<tr>
+    //           <td>${index + 1}</td>
+    //           <td>${item.username}</td>
+    //           <td>${item.guessPoints}</td>
+    //         </tr>`
+    //       ).join("");
+    //     }
+    //   } catch (error) {
+    //     leaderboards.innerHTML = `<p class="text-center display-6 mt-5">No one is on the board!</p>`;
+    //   }
+    // }
 
-    displayLeaderboards();
+    // displayLeaderboards();
     startNewGame(); 
 
     </script>

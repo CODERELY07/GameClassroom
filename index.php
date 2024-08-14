@@ -11,11 +11,12 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <title>Game Classroom</title>
+    <link rel="stylesheet" href="style.css">
   </head>
   <body>
     <main class="container py-5">
 
-        <h1 class="jumbotron p-4 text-center text-danger display-3">Welcome to Game Classroom!</h1>
+        <h1 class="jumbotron p-4 text-center display-3">Welcome to Game Classroom!</h1>
         <p>Get ready for a thrilling test of luck and strategy in Classroom, the ultimate guessing game where your skills with numbers and dice rolls will determine your success. In this game, it's not just about what you know, but how you play your cards right!</p>
 
         <div class="mt-5"> 
@@ -45,7 +46,7 @@
             <h3 class="display-6">Ready to Roll?</h3>
             <p>Dive into Classroom and experience the excitement of guessing and rolling like never before. Compete for the highest scores, claim your spot on the leaderboards, and prove you’ve got what it takes to be the ultimate guessing champion!</p>
             <a href="signup.php">
-                <button class="btn btn-danger">Join Now</button>
+                <button class="btn primary-btn">Join Now</button>
             </a>
            
         </div>

@@ -1,5 +1,4 @@
 <?php
-    
     session_start();
     if(!isset($_SESSION['isLogin'])){
       header('location:../index.php');
@@ -15,29 +14,34 @@
     <title>Game Classroom</title>
     <link rel="stylesheet" href="../style.css?v=<?php echo time(); ?>">
   </head>
-  <body class="bg-danger">
-    <main class="container">
-      <header class="gameHubHeader bg-dark text-white">
+  <body>
+    <header style="box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;">
+      <div class="container gameHubHeader">
         <div class="dashboard">
-          <h3 class="display-5 pointer">GameHub</h3>
-        </div>
-        <div class="profile">
-          <div class="profile_pic pointer">
-            
+            <a href="dashboard.php" class="text-decoration-none"><h3 class="display-5 pointer text-center VT323">Game Classroom</h3></a>
           </div>
-          <a href="../logout.php">
-            <button class="btn btn-danger">Logout</button>
-          </a>
-        </div>
-      </header>
+          <div class="profile" onclick='btn(this)'>
+            <div class="profile_pic pointer">
+              
+            </div>
+            <ul class="profile-settings">
+              <li><a href="leaderboards.php">LeaderBoards</a></li>
+              <li><a href="">Settings</a></li>
+              <li><a href="../logout.php">Logout</a></li>
+            </ul>
+          </div>
+      </div>
+       
+    </header>
+    <main class="container">
         <div class="row mt-5 gy-4">
           <div class="col-md-6">
             <div class="card box">
               <div class="card-body">
-                <h4>Guessing The Number</h4>
+                <h4 class="mb-4 display-6">Guessing The Number</h4>
                  <p><strong>Guess the Number: </strong> Each round, you'll be presented with a number that you need to guess. Make your best prediction based on the clues and hints provided.</strong></p>
                 <a href="guessNumber.php">
-                   <button class="btn btn-dark">Play Now</button>
+                   <button class="btn primary-btn">Play Now</button>
                 </a>
               </div>
             </div>
@@ -45,15 +49,22 @@
           <div class="col-md-6">
             <div class="card box">
               <div class="card-body">
-                <h4>Rock, Paper, Scissors</h4>
+                <h4 class="mb-4 display-6">Rock, Paper, Scissors</h4>
                 <p><strong>Rock, Paper, Scissors: </strong>The excitement doesn’t stop at just guessing! Play Rock, Paper, Scissors to add an extra layer of chance and strategy.</p>
                 <a href="rockPaperScissors.php">
-                   <button class="btn btn-dark">Play Now</button>
+                   <button class="btn primary-btn">Play Now</button>
                 </a>
               </div>
             </div>
           </div>
         </div>
     </main>
+
+    <script>
+      function btn(elem){
+        elem.lastElementChild.classList.toggle('active');
+      }
+
+    </script>
   </body>
 </html>

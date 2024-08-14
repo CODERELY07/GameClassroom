@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=VT323&display=swap');
 *,
 *::after,
 *::before{
@@ -8,6 +9,39 @@
 html,
 .box{
     scroll-behavior: smooth;
+}
+ul {
+ list-style: none;
+ position: absolute;
+ box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+ right: 60px;
+ top: 30px;
+ background-color: #fff;
+ border-radius: 5px;
+ padding: 10px 0;
+ z-index: 1;
+}
+header{
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+.gameHubHeader ul li{
+    padding: 10px 25px;
+}
+.gameHubHeader ul li:hover a{
+   text-decoration: underline;
+}
+.profile-settings {
+    display: none;
+}
+.profile-settings.active {
+    display: block;
+}
+.gameHubHeader ul li a{
+    text-decoration: none;
+    color: #686868;
+}
+.profile{
+    position: relative;
 }
 .cards{
     max-width: 600px;
@@ -37,7 +71,6 @@ html,
     border-radius: 50%;
 }
 .gameHubHeader{
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     padding: 15px 25px;
     display: flex;
     align-items:center;
@@ -49,4 +82,26 @@ html,
     align-items: center;
     gap: 10px;
     justify-content: center;
+}
+.login-container{
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+.primary-btn{
+    background-color:#6A7EFC;
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: 600;
+    transition: transform 500ms;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+.primary-btn:hover{
+    color: #fff;
+    transform: scale(1.1);
+}
+.VT323{
+    font-family: "VT323", monospace;
+    color: #6A7EFC;
+}
+.text-decoration-none{
+    text-decoration: none;
 }

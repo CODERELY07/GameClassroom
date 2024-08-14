@@ -6,6 +6,11 @@
         // Sanitize input data
         $username = htmlspecialchars($_POST['username']);
         $password = htmlspecialchars($_POST['password']);
+        $confirmPassword = htmlspecialchars($_POST['confirm-password']);
+
+        $_SESSION['username'] = $username;
+        $_SESSION['password'] = $password;
+        $_SESSION['confirmPassword'] = $confirmPassword;
         if(empty($username) || empty($password)){
             $_SESSION['status'] = "Please fill in all fields.";
             header("Location: signup.php");
@@ -14,11 +19,13 @@
             $_SESSION['status'] = "Password should be atleast 6 characters";
             header("Location: signup.php");
             exit();
+        }else if($password != $confirmPassword){
+            $_SESSION['status'] = "Password doesn't Match";
+            header("Location: signup.php");
+            exit();
         }
         else{
-        $_SESSION['username'] = $username;
-        $_SESSION['password'] = $password;
-        
+      
         $check_username = "SELECT id FROM users WHERE username = ?";
         $check_stmt = $conn->prepare($check_username);
 
@@ -45,6 +52,9 @@
             $stmt->bind_param("ss", $username, $password);
             // Execute the statement and handle possible errors
             if ($stmt->execute()) {
+                unset($_SESSION['username']);
+                unset($_SESSION['password']);
+                unset($_SESSION['confirmPassword']);
                 header("Location: login.php");
                 exit();
             } else {
@@ -63,13 +73,14 @@
         // Sanitize input data
         $username = htmlspecialchars($_POST['username']);
         $password = htmlspecialchars($_POST['password']);
+        $_SESSION['username'] = $username;
+        $_SESSION['password'] = $password;
         if(empty($username) || empty($password)){
             $_SESSION['status'] = "Please fill in all fields.";
             header("Location: signup.php");
             exit();
         }else{
-            $_SESSION['username'] = $username;
-            $_SESSION['password'] = $password;
+           
             // Prepare an SQL statement to prevent SQL injection
             $sql = "SELECT id FROM users WHERE username = ? && password = ?";
             $stmt = $conn->prepare($sql);
@@ -83,6 +94,8 @@
             $stmt->execute();
             $stmt->store_result();
             if ($stmt->num_rows > 0) {
+                unset($_SESSION['username']);
+                unset($_SESSION['password']);
                 $_SESSION['isLogin'] = true;
                 $_SESSION['usernameLogin'] = $username;
                 header("Location: gameHub/dashboard.php");
