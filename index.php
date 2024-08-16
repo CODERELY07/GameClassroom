@@ -11,7 +11,7 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <title>Game Classroom</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=<?php echo time();?>">
   </head>
   <body>
     <main class="container py-5">
@@ -50,7 +50,40 @@
             </a>
            
         </div>
+
+        <article>
+            <h2 class="display-6 mt-5 text-center">Try or Multiplayer Games</h2>
+            <div class="line"></div>
+            <div class="row mt-5 gy-4">
+            <div class="col-md-6">
+                <div class="card box">
+                <div class="card-body">
+                    <h4 class="mb-4 display-6">Dice Dice Roll!</h4>
+                    <p><strong>Dice Dice Roll!: </strong> In this multiplayer dice game, players decide how many rounds they want to play at the beginning of the game. During each round, players take turns rolling dice. The player with the highest roll in each round wins that round. The game continues until all chosen rounds have been played. </strong></p>
+                    <a href="multiplayer/dice/dice.html">
+                    <button class="btn primary-btn">Play Now</button>
+                    </a>
+                </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card box">
+                <div class="card-body">
+                    <h4 class="mb-4 display-6">Rock, Paper, Scissors</h4>
+                    <p><strong>Rock, Paper, Scissors: </strong>The excitement doesn’t stop at just guessing! Play Rock, Paper, Scissors to add an extra layer of chance and strategy.</p>
+                    <a href="rockPaperScissors.php">
+                    <button class="btn primary-btn">Play Now</button>
+                    </a>
+                </div>
+                </div>
+            </div>
+            </div>
+        </article>
     </main>
+
+
+
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
   </body>
 </html>

@@ -52,6 +52,7 @@ header{
 .box{
     overflow: scroll;
     height: 250px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     max-height: max-content;
 }
 .box .card-body{
@@ -104,4 +105,14 @@ header{
 }
 .text-decoration-none{
     text-decoration: none;
+}
+.line{
+    width: 200px;
+    max-width: 70%;
+    background-color:#6A7EFC;
+    height: 2px;
+    margin: 0 auto;
+    position: relative;
+    top: 0px;
+    border-radius: 8px;
 }
